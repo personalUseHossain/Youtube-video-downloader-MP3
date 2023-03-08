@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: grid;
+            place-items: center;
+            height: 100vh;
+            
+        }
+        input{
+            padding: 9px 10px;
+            width: 40vw;
+            border-radius: 15px;
+        }
+        button{
+            padding: 8px;
+            background-color: yellowgreen;
+            border-radius: 15px;
+        }
+        a{
+            text-decoration: none;
+            font-size: 20px;
+            text-transform: uppercase;
+            border-bottom: 100% solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    <input id="link" type="url" placeholder="Enter your youtube url">
+    <button id="download">getlink</button>
+</div>
+    <h1>Give the video link again if download link don't work</h1>
+
+
+
+    <script>
+
+        let input = document.getElementById('link')
+        let button = document.getElementById('download')
+        
+        button.addEventListener('click', ()=>{
+            let id = input.value;
+        
+            let substr = id.substring(id.indexOf("v=") + 2);
+            
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '835a27c758msh27567010ccff499p1f4002jsn3586582498bb',
+                    'X-RapidAPI-Host': 'youtube-mp3-download1.p.rapidapi.com'
+                }
+            };
+
+            fetch(`https://youtube-mp3-download1.p.rapidapi.com/dl?id=${substr}`, options)
+                .then(response => response.json())
+                .then(response => {
+                    let mainUrl = response.link;
+                    // console.log(mainUrl)
+                    let newBtn = document.createElement('a');
+                    let container = document.querySelector('.container');
+                    // console.log(container)
+                    newBtn.innerHTML = 'Download MP3'
+                    newBtn.href = mainUrl
+                    container.append(newBtn)
+                    
+
+                })
+                .catch(err => console.log(err));
+                
+        })
+
+
+
+       
+
+  
+
+  
+
+    </script>
+</body>
+
+</html>
